@@ -8,6 +8,8 @@ export const ProductGrid = ({ products }) => {
   const [showAll, setShowAll] = useState(false)
   const initialDisplayCount = 8
 
+  
+
   // 🆕 2. NEW STATE: Which category is selected?
   const [selectedCategory, setSelectedCategory] = useState('All')
 

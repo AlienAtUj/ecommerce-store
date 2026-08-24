@@ -1,45 +1,36 @@
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export const ProductCard = ({ product }) => {
-    const [wishList ,setWishlist] = useState(()=>{
-        const savedWishlist = localStorage.getItem('wishlist');
+  
+  const [isLiked, setIsLiked] = useState(() => {
+    const saved = localStorage.getItem('wishlist')
+    if (!saved) return false
+    const wishlistArray = JSON.parse(saved)
+    // ✅ Check if this product exists in the wishlist
+    return wishlistArray.some(item => item.id === product.id)
+  })
 
-        if(!savedWishlist) return false;
+  const discount = Math.round(product.discountPercentage)
 
-        const wishListArray = JSON.parse(savedWishlist);
-
-        return wishListArray.includes(product.id.toString());
-    });
-    const discount = Math.round(product.discountPercentage)
-
-    const toogleWishlist = ()=>{
-        const savedWishlist = localStorage.getItem('wishlist');
-        let wishListArray = savedWishlist ? JSON.parse(savedWishlist) : [];
-
-        const productId = product.id.toString();
-        const isLiked =  wishListArray.includes(productId);
-
-        if(isLiked){
-           //Remove it from the list
-           wishListArray = wishListArray.filter(id => id !== productId);
-
-        }else{
-               wishListArray.push(productId);
-        } 
-
-        localStorage.setItem('wishlist',JSON.stringify(wishListArray));
-
-        setWishlist(!isLiked);
+  const toggleWishlist = () => {
+    const saved = localStorage.getItem('wishlist')
+    let wishlistArray = saved ? JSON.parse(saved) : []
+    
+    const exists = wishlistArray.some(item => item.id === product.id)
+    
+    if (exists) {
+      wishlistArray = wishlistArray.filter(item => item.id !== product.id)
+    } else {
+      // ✅ Store the ENTIRE product object, not just the ID!
+      wishlistArray.push(product)
     }
-
-
-
-   
-
+    
+    localStorage.setItem('wishlist', JSON.stringify(wishlistArray))
+    setIsLiked(!exists)
+  }
 
   return (
-
     <div className="group cursor-pointer">
       
       {/* IMAGE CONTAINER */}
@@ -50,41 +41,36 @@ export const ProductCard = ({ product }) => {
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]"
         />
 
-        
         {discount > 10 && (
           <span className="absolute top-3 left-3 bg-black text-white px-2.5 py-1 text-[9px] font-bold tracking-wide">
             -{discount}%
           </span>
         )}
 
-        
         <button 
-           onClick={toogleWishlist} 
-            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
-         >
-           <svg 
-                  className={`w-[17px] h-[17px] transition-colors duration-300 ${
-                wishList ? 'fill-red-500 text-red-500' : 'text-gray-700'
-           }`}
-              fill={wishList ? 'currentColor' : 'none'}
-              stroke="currentColor" 
-                 viewBox="0 0 24 24"
-                 >
-           <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.8"
-                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"
+          onClick={toggleWishlist}
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+        >
+          <svg 
+            className={`w-[17px] h-[17px] transition-colors duration-300 ${
+              isLiked ? 'fill-red-500 text-red-500' : 'text-gray-700'
+            }`}
+            fill={isLiked ? 'currentColor' : 'none'}
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.8"
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"
             />
-               </svg>
+          </svg>
         </button>
-        
       </div>
-    
 
       {/* PRODUCT INFO */}
       <div className="pt-3">
-        {/* STARS */}
         <div className="flex items-center gap-1 mb-1.5">
           <div className="flex items-center gap-0.5">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -113,14 +99,11 @@ export const ProductCard = ({ product }) => {
           )}
         </div>
 
-        {/* ADD TO CART BUTTON */}
         <Button className="w-full mt-3 h-10 rounded-none bg-black hover:bg-orange-500 text-white text-[10px] uppercase tracking-[0.12em] font-bold transition-colors">
           Add to Cart
         </Button>
       </div>
-      
 
     </div>
-
   )
 }

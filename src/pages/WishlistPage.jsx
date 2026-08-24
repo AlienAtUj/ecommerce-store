@@ -4,15 +4,12 @@ import { Link } from 'react-router-dom'
 
 export const WishlistPage = () => {
 
-
   const [wishlist, setWishlist] = useState([])
 
-  // useEffect: Loads wishlist from localStorage
- 
   useEffect(() => {
     const saved = localStorage.getItem('wishlist')
     if (saved) {
-      const wishlistArray = JSON.parse(saved);
+      const wishlistArray = JSON.parse(saved)
       setWishlist(wishlistArray)
     }
   }, [])
@@ -21,7 +18,6 @@ export const WishlistPage = () => {
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         
-        {/* ===== PAGE HEADER ===== */}
         <div className="mb-10 flex items-end justify-between">
           <div>
             <p className="text-orange-500 text-[11px] font-bold tracking-[0.2em] uppercase mb-2">
@@ -36,18 +32,9 @@ export const WishlistPage = () => {
           </span>
         </div>
 
-        {/* ============================================
-        CONDITIONAL RENDERING
-        - If wishlist is empty → Show empty state
-        - If wishlist has items → Show products
-        ============================================ */}
         {wishlist.length === 0 ? (
           
-          // ============================================
-          // EMPTY STATE (Shows when no products in wishlist)
-          // ============================================
           <div className="bg-white border border-gray-100 p-8 sm:p-12 text-center">
-            
             <div className="flex justify-center mb-6">
               <svg 
                 className="w-16 h-16 text-gray-300" 
@@ -82,15 +69,10 @@ export const WishlistPage = () => {
           
         ) : (
           
-        
-          // PRODUCT GRID 
-        
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             
-          
             {wishlist.map((product) => (
               <div key={product.id} className="bg-white border border-gray-100 group">
-                
                 
                 <div className="relative aspect-square overflow-hidden bg-[#f0f0f0]">
                   <img
@@ -100,7 +82,6 @@ export const WishlistPage = () => {
                   />
                 </div>
 
-              
                 <div className="p-4">
                   <h3 className="text-sm font-medium line-clamp-1">
                     {product.title}
@@ -115,6 +96,13 @@ export const WishlistPage = () => {
 
               </div>
             ))}
+
+                        <Link to="/">
+              <button className="mt-6 bg-black text-white px-8 py-3.5 text-xs font-bold uppercase tracking-[0.12em] hover:bg-orange-500 transition-colors">
+                Continue Shopping
+              </button>
+            </Link>
+
           </div>
         )}
 
