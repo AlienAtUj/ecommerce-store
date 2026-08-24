@@ -39,7 +39,7 @@ export const Header = () => {
                 <span className="text-[10px]">Account</span>
               </button>
 
-              {/* 👇 WISHLIST WITH BADGE */}
+              
               <Link 
                 to="/wishlist"
                 className="hidden sm:flex flex-col items-center gap-1 text-gray-700 hover:text-black transition relative"
@@ -49,7 +49,7 @@ export const Header = () => {
                 </svg>
                 <span className="text-[10px]">Wishlist</span>
                 
-                {/* 👇 BADGE - Shows 0 for now */}
+               
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                   0
                 </span>

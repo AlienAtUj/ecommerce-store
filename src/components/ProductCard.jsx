@@ -2,13 +2,41 @@ import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 
 export const ProductCard = ({ product }) => {
-    const [wishList ,setWishlist] = useState(false);
-  const discount = Math.round(product.discountPercentage)
+    const [wishList ,setWishlist] = useState(()=>{
+        const savedWishlist = localStorage.getItem('wishlist');
+
+        if(!savedWishlist) return false;
+
+        const wishListArray = JSON.parse(savedWishlist);
+
+        return wishListArray.includes(product.id.toString());
+    });
+    const discount = Math.round(product.discountPercentage)
+
+    const toogleWishlist = ()=>{
+        const savedWishlist = localStorage.getItem('wishlist');
+        let wishListArray = savedWishlist ? JSON.parse(savedWishlist) : [];
+
+        const productId = product.id.toString();
+        const isLiked =  wishListArray.includes(productId);
+
+        if(isLiked){
+           //Remove it from the list
+           wishListArray = wishListArray.filter(id => id !== productId);
+
+        }else{
+               wishListArray.push(productId);
+        } 
+
+        localStorage.setItem('wishlist',JSON.stringify(wishListArray));
+
+        setWishlist(!isLiked);
+    }
+
+
 
    
-  const isLiked = ()=>{
-    setWishlist(!wishList);
-  }
+
 
   return (
 
@@ -30,26 +58,26 @@ export const ProductCard = ({ product }) => {
         )}
 
         
- <button 
-  onClick={isLiked} 
-  className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
->
-  <svg 
-    className={`w-[17px] h-[17px] transition-colors duration-300 ${
-      wishList ? 'fill-red-500 text-red-500' : 'text-gray-700'
-    }`}
-    fill={wishList ? 'currentColor' : 'none'}
-    stroke="currentColor" 
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.8"
-      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"
-    />
-  </svg>
-</button>
+        <button 
+           onClick={toogleWishlist} 
+            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+         >
+           <svg 
+                  className={`w-[17px] h-[17px] transition-colors duration-300 ${
+                wishList ? 'fill-red-500 text-red-500' : 'text-gray-700'
+           }`}
+              fill={wishList ? 'currentColor' : 'none'}
+              stroke="currentColor" 
+                 viewBox="0 0 24 24"
+                 >
+           <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.8"
+                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"
+            />
+               </svg>
+        </button>
         
       </div>
     
