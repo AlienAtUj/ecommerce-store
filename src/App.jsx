@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Hero } from './components/Hero'
 import { Layout } from './components/Layout'
+import { Routes, Route } from 'react-router-dom'
 import { FeatureStrip } from './components/FeatureStrip'
 import { ProductGrid } from './components/ProductGrid'
 import { LoadingSpinner } from './components/LoadingSpinner'
+import { WishlistPage } from './pages/WishlistPage'
 
 export const App = () => {
     const [products,setProducts] = useState('');
@@ -21,12 +23,23 @@ export const App = () => {
     if(loading){
       return <LoadingSpinner/>
     }
-   return (
-    <Layout>  
-      <Hero />
-      <FeatureStrip />
-      <ProductGrid products={products} />
-    </Layout>
+ return (
+    <Routes>
+      <Route 
+        path="/" 
+        element={
+          <Layout>
+            <Hero />
+            <FeatureStrip />
+            <ProductGrid products={products} />
+          </Layout>
+        } 
+      />
+      
+      {/* 👇 ADD THIS ONE LINE */}
+      <Route path="/wishlist" element={<WishlistPage />} />
+
+    </Routes>
   )
 }
 
