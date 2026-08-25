@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 
 export const ProductCard = ({ product }) => {
   
+
+  
   const [isLiked, setIsLiked] = useState(() => {
     const saved = localStorage.getItem('wishlist')
     if (!saved) return false
@@ -11,12 +13,24 @@ export const ProductCard = ({ product }) => {
     return wishlistArray.some(item => item.id === product.id)
   })
 
-  const [cartItems , setCartItems] = useState([]);
 
-  const addToCart = (id)=>{
-
+  const [cartItem, setCartItem] = useState(() => {
+    const saved = localStorage.getItem('cart')
+    if (!saved) return null
+    const cartArray = JSON.parse(saved)
     
-  }
+    const found = cartArray.find(item => item.id === product.id)
+    return found || null  
+  })
+
+
+  const [quantity, setQuantity] = useState(() => {
+    const saved = localStorage.getItem('cart')
+    if (!saved) return 1
+    const cartArray = JSON.parse(saved)
+    const found = cartArray.find(item => item.id === product.id)
+    return found ? found.quantity : 1
+  })
 
   const discount = Math.round(product.discountPercentage)
 
@@ -39,13 +53,88 @@ export const ProductCard = ({ product }) => {
     setIsLiked(!exists)
   }
 
-  return (
+
+  const addToCart = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    
+  
+    const saved = localStorage.getItem('cart')
+    let cartArray = saved ? JSON.parse(saved) : []
+    
+    
+    const existingItem = cartArray.find(item => item.id === product.id)
+    
+    if (existingItem) {
+     
+      existingItem.quantity = quantity
+    } else {
+      
+      const cartItem = {
+        ...product,
+        quantity: quantity
+      }
+      cartArray.push(cartItem)
+    }
+    
+    
+    localStorage.setItem('cart', JSON.stringify(cartArray))
+    
+  
+    setCartItem(existingItem || { ...product, quantity })
+  }
+
+
+  const removeFromCart = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    
+    
+    const saved = localStorage.getItem('cart')
+    let cartArray = saved ? JSON.parse(saved) : []
+    
    
+    cartArray = cartArray.filter(item => item.id !== product.id)
+    
+    
+    localStorage.setItem('cart', JSON.stringify(cartArray))
+    
+  
+    setCartItem(null)
+    setQuantity(1)
+  }
+
+
+  const handleQuantityChange = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    
+    const newQuantity = parseInt(e.target.value) || 1
+    
+    // Make sure quantity is at least 1
+    const finalQuantity = Math.max(1, newQuantity)
+    setQuantity(finalQuantity)
+    
+    // If product is already in cart, update the quantity
+    if (cartItem) {
+      const saved = localStorage.getItem('cart')
+      let cartArray = saved ? JSON.parse(saved) : []
+      const existingItem = cartArray.find(item => item.id === product.id)
+      
+      if (existingItem) {
+        existingItem.quantity = finalQuantity
+        localStorage.setItem('cart', JSON.stringify(cartArray))
+        setCartItem({ ...existingItem, quantity: finalQuantity })
+      }
+    }
+  }
+  
+  return (
     <Link to={`/product/${product.id}`} className="group cursor-pointer block">
       
       <div className="group cursor-pointer">
         
-      
+        {/* IMAGE CONTAINER */}
         <div className="relative overflow-hidden bg-[#f0f0f0] aspect-[0.78]">
           <img
             src={product.thumbnail}
@@ -59,7 +148,6 @@ export const ProductCard = ({ product }) => {
             </span>
           )}
 
-        
           <button 
             onClick={toggleWishlist}
             className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10"
@@ -82,7 +170,7 @@ export const ProductCard = ({ product }) => {
           </button>
         </div>
 
-       
+     
         <div className="pt-3">
           <div className="flex items-center gap-1 mb-1.5">
             <div className="flex items-center gap-0.5">
@@ -112,17 +200,93 @@ export const ProductCard = ({ product }) => {
             )}
           </div>
 
-         
-          <Button 
-            onClick={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-              // Add to cart logic here
-            }}
-            className="w-full mt-3 h-10 rounded-none bg-black hover:bg-orange-500 text-white text-[10px] uppercase tracking-[0.12em] font-bold transition-colors"
-          >
-            Add to Cart
-          </Button>
+          <div className="flex items-center gap-2 mt-3">
+            
+            <div className="flex items-center border border-gray-200">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  if (quantity > 1) {
+                    const newQty = quantity - 1
+                    setQuantity(newQty)
+                
+                    if (cartItem) {
+                      const saved = localStorage.getItem('cart')
+                      let cartArray = saved ? JSON.parse(saved) : []
+                      const item = cartArray.find(i => i.id === product.id)
+                      if (item) {
+                        item.quantity = newQty
+                        localStorage.setItem('cart', JSON.stringify(cartArray))
+                        setCartItem({ ...item, quantity: newQty })
+                      }
+                    }
+                  }
+                }}
+                className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H4" />
+                </svg>
+              </button>
+              
+              <input
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={handleQuantityChange}
+                className="w-12 h-8 text-center text-sm border-x border-gray-200 outline-none"
+              />
+              
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  const newQty = quantity + 1
+                  setQuantity(newQty)
+                
+                  if (cartItem) {
+                    const saved = localStorage.getItem('cart')
+                    let cartArray = saved ? JSON.parse(saved) : []
+                    const item = cartArray.find(i => i.id === product.id)
+                    if (item) {
+                      item.quantity = newQty
+                      localStorage.setItem('cart', JSON.stringify(cartArray))
+                      setCartItem({ ...item, quantity: newQty })
+                    }
+                  }
+                }}
+                className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+            </div>
+
+            {/* ADD TO CART BUTTON */}
+            <Button 
+              onClick={addToCart}
+              className={`flex-1 h-8 rounded-none text-[10px] uppercase tracking-[0.12em] font-bold transition-colors ${
+                cartItem 
+                  ? 'bg-green-600 hover:bg-green-700' 
+                  : 'bg-black hover:bg-orange-500'
+              } text-white`}
+            >
+              {cartItem ? `✓ Update (${cartItem.quantity})` : 'Add to Cart'}
+            </Button>
+
+       
+            {cartItem && (
+              <button
+                onClick={removeFromCart}
+                className="h-8 px-3 bg-red-500 hover:bg-red-600 text-white text-[10px] font-bold uppercase tracking-wider transition-colors"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
         </div>
         
       </div>
