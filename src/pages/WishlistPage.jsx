@@ -97,7 +97,7 @@ export const WishlistPage = () => {
               </div>
             ))}
 
-                        <Link to="/">
+            <Link to="/">
               <button className="mt-6 bg-black text-white px-8 py-3.5 text-xs font-bold uppercase tracking-[0.12em] hover:bg-orange-500 transition-colors">
                 Continue Shopping
               </button>
