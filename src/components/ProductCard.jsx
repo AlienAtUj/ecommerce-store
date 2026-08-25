@@ -11,6 +11,13 @@ export const ProductCard = ({ product }) => {
     return wishlistArray.some(item => item.id === product.id)
   })
 
+  const [cartItems , setCartItems] = useState([]);
+
+  const addToCart = (id)=>{
+
+    
+  }
+
   const discount = Math.round(product.discountPercentage)
 
   const toggleWishlist = (e) => {

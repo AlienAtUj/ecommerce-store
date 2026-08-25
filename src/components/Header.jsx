@@ -55,13 +55,13 @@ export const Header = () => {
                 </span>
               </Link>
 
-              <button className="flex flex-col items-center gap-1 text-gray-700 hover:text-black transition relative">
+              <Link  to="/cart" className="flex flex-col items-center gap-1 text-gray-700 hover:text-black transition relative">
                 <svg className="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" d="M3 3h2l2.4 12.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H6M10 21a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm9 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
                 </svg>
                 <span className="text-[10px]">Cart</span>
                 <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
-              </button>
+              </Link>
             </div>
           </div>
 

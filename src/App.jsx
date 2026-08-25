@@ -7,6 +7,7 @@ import { ProductGrid } from './components/ProductGrid'
 import { LoadingSpinner } from './components/LoadingSpinner'
 import { WishlistPage } from './pages/WishlistPage'
 import { ProductDetailsPage } from './pages/ProductDetailsPage'
+import { CartPage } from './pages/CartPage'
 export const App = () => {
     const [products,setProducts] = useState('');
     const [loading,setLoading] = useState(true);
@@ -56,7 +57,7 @@ useEffect(() => {
   
       <Route path="/wishlist" element={<WishlistPage />} />
       <Route path="/product/:id" element={<ProductDetailsPage />} />
-
+      <Route path="/cart" element={<CartPage/>}/>
     </Routes>
   )
 }
