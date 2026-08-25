@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Link } from 'react-router-dom'  // ✅ FIXED: Import from react-router-dom, NOT node:fs
+import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 export const ProductCard = ({ product }) => {
@@ -14,8 +14,8 @@ export const ProductCard = ({ product }) => {
   const discount = Math.round(product.discountPercentage)
 
   const toggleWishlist = (e) => {
-    e.stopPropagation()  // ✅ Stops the click from triggering the Link navigation
-    e.preventDefault()   // ✅ Prevents any default behavior
+    e.stopPropagation()  
+    e.preventDefault()   
     
     const saved = localStorage.getItem('wishlist')
     let wishlistArray = saved ? JSON.parse(saved) : []
@@ -33,12 +33,12 @@ export const ProductCard = ({ product }) => {
   }
 
   return (
-    // ✅ Link wraps the entire card, making it clickable
+   
     <Link to={`/product/${product.id}`} className="group cursor-pointer block">
       
       <div className="group cursor-pointer">
         
-        {/* IMAGE CONTAINER */}
+      
         <div className="relative overflow-hidden bg-[#f0f0f0] aspect-[0.78]">
           <img
             src={product.thumbnail}
@@ -52,7 +52,7 @@ export const ProductCard = ({ product }) => {
             </span>
           )}
 
-          {/* ✅ Heart button with stopPropagation */}
+        
           <button 
             onClick={toggleWishlist}
             className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10"
@@ -75,7 +75,7 @@ export const ProductCard = ({ product }) => {
           </button>
         </div>
 
-        {/* PRODUCT INFO */}
+       
         <div className="pt-3">
           <div className="flex items-center gap-1 mb-1.5">
             <div className="flex items-center gap-0.5">
@@ -105,7 +105,7 @@ export const ProductCard = ({ product }) => {
             )}
           </div>
 
-          {/* ✅ Add to Cart button - also needs to stop propagation */}
+         
           <Button 
             onClick={(e) => {
               e.stopPropagation()

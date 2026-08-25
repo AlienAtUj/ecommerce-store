@@ -3,15 +3,15 @@ import { useParams, Link } from 'react-router-dom'
 import { Layout } from '../components/Layout'
 
 export const ProductDetailsPage = () => {
-  // 1️⃣ Get the product ID from the URL
+
   const { id } = useParams()
   
-  // 2️⃣ State for product data and loading
+
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // 3️⃣ Fetch product details when page loads or ID changes
+  
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -37,7 +37,6 @@ export const ProductDetailsPage = () => {
     }
   }, [id])
 
-  // 4️⃣ Show loading state
   if (loading) {
     return (
       <Layout>
@@ -53,7 +52,7 @@ export const ProductDetailsPage = () => {
     )
   }
 
-  // 5️⃣ Show error state
+ 
   if (error || !product) {
     return (
       <Layout>
@@ -73,7 +72,6 @@ export const ProductDetailsPage = () => {
     )
   }
 
-  // 6️⃣ Show product details
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
