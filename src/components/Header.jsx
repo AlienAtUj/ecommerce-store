@@ -73,6 +73,20 @@ export const Header = () => {
           </div>
 
         </div>
+        <Link 
+  to="/login"
+  className="hidden sm:flex flex-col items-center gap-1 text-gray-700 hover:text-black transition"
+>
+  <svg className="w-[21px] h-[21px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.7"
+      d="M20 21a8 8 0 0 0-16 0m8-11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+    />
+  </svg>
+  <span className="text-[10px]">Account</span>
+</Link>
       </header>
     </>
   )

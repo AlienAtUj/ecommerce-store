@@ -8,6 +8,9 @@ import { LoadingSpinner } from './components/LoadingSpinner'
 import { WishlistPage } from './pages/WishlistPage'
 import { ProductDetailsPage } from './pages/ProductDetailsPage'
 import { CartPage } from './pages/CartPage'
+import { LoginPage } from './pages/LoginPage'      // 👈 ADD THIS
+import { SignupPage } from './pages/SignupPage'
+
 export const App = () => {
     const [products,setProducts] = useState('');
     const [loading,setLoading] = useState(true);
