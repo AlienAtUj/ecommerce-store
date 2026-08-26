@@ -61,6 +61,8 @@ useEffect(() => {
       <Route path="/wishlist" element={<WishlistPage />} />
       <Route path="/product/:id" element={<ProductDetailsPage />} />
       <Route path="/cart" element={<CartPage/>}/>
+      <Route path='/login' element={<LoginPage/>}/>
+      <Route path='/signup' element={<SignupPage/>}/>
     </Routes>
   )
 }
