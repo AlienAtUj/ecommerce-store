@@ -72,7 +72,7 @@ export const SignupPage = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="John Doe"
+                placeholder="Kholofelo Ntsoane"
                 required
                 className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
               />
@@ -88,7 +88,7 @@ export const SignupPage = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder="igamalakho@example.com"
                 required
                 className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
               />
@@ -104,7 +104,7 @@ export const SignupPage = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="********"
                 required
                 className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
               />
@@ -120,7 +120,7 @@ export const SignupPage = () => {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="*******"
                 required
                 className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
               />
