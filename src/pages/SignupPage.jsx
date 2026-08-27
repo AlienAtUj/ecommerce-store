@@ -4,12 +4,10 @@ import { useState } from 'react'
 
 export const SignupPage = () => {
 
-  // ============================================
-  // 🧠 STATE (You will implement the logic)
-  // ============================================
   
   const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [number,setNumber] = useState('')
+   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
@@ -71,8 +69,23 @@ export const SignupPage = () => {
                 id="name"
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setNumber(e.target.value)}
                 placeholder="Kholofelo Ntsoane"
+                required
+                className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
+              />
+            </div>
+
+             <div className="mb-4">
+              <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+               Phone number
+              </label>
+              <input
+                id="phonenumber"
+                type="number"
+                value={number}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="+2712345678"
                 required
                 className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
               />

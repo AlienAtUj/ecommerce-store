@@ -1,7 +1,21 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export const Header = () => {
 
+const [nWishlist, setnWishlist] = useState(0);
+const [cartItems, setcartItems] = useState(0);
+
+useEffect(() => {
+    const loadWishlist = localStorage.getItem('wishlist');
+    const loadCart = localStorage.getItem('cart');
+
+    const wishlistArray = loadWishlist ? JSON.parse(loadWishlist) : [];
+    const cartArray = loadCart ? JSON.parse(loadCart) : [];
+
+    setnWishlist(wishlistArray.length);
+    setcartItems(cartArray.length);
+}, []);
   return (
     <>
       {/* TOP PROMOTION BAR */}
@@ -18,7 +32,7 @@ export const Header = () => {
             
             {/* LOGO */}
             <div className="flex-shrink-0">
-              <h1 className="text-[28px] sm:text-[32px] font-black tracking-[-0.07em]">
+              <h1 className="text-[28px] sm:text-[32px] font-black tracking-[-0.07em]" >
                 NOVA<span className="text-orange-500">.</span>
               </h1>
             </div>
@@ -62,7 +76,7 @@ export const Header = () => {
                 
                 {/* Badge */}
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                  0
+                  {nWishlist}
                 </span>
               </Link>
 
@@ -78,7 +92,7 @@ export const Header = () => {
                 
                 {/* Badge */}
                 <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                  0
+                  {cartItems}
                 </span>
               </Link>
 
