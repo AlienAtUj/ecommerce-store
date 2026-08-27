@@ -13,30 +13,17 @@ export const SignupPage = () => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  // ============================================
-  // 🧠 HANDLE SIGNUP (You will implement this)
-  // ============================================
-  
+
   const handleSignup = (e) => {
     e.preventDefault()
     
-    // TODO: Implement signup logic
-    // 1. Validate all fields
-    // 2. Check if passwords match
-    // 3. Call API or save to localStorage
-    // 4. Handle success/error
-    // 5. Redirect to login on success
-    
-    console.log('Signup attempt:', { name, email, password })
+
   }
 
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         
-        {/* ============================================
-        🧠 SIGNUP FORM
-        ============================================ */}
         
         <div className="max-w-md mx-auto">
           
@@ -69,7 +56,7 @@ export const SignupPage = () => {
                 id="name"
                 type="text"
                 value={name}
-                onChange={(e) => setNumber(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Kholofelo Ntsoane"
                 required
                 className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
@@ -84,7 +71,7 @@ export const SignupPage = () => {
                 id="phonenumber"
                 type="number"
                 value={number}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setNumber(e.target.value)}
                 placeholder="+2712345678"
                 required
                 className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"

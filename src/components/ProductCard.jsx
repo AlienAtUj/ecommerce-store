@@ -111,11 +111,11 @@ export const ProductCard = ({ product }) => {
     
     const newQuantity = parseInt(e.target.value) || 1
     
-    // Make sure quantity is at least 1
+    
     const finalQuantity = Math.max(1, newQuantity)
     setQuantity(finalQuantity)
     
-    // If product is already in cart, update the quantity
+   
     if (cartItem) {
       const saved = localStorage.getItem('cart')
       let cartArray = saved ? JSON.parse(saved) : []
@@ -134,7 +134,7 @@ export const ProductCard = ({ product }) => {
       
       <div className="group cursor-pointer">
         
-        {/* IMAGE CONTAINER */}
+      
         <div className="relative overflow-hidden bg-[#f0f0f0] aspect-[0.78]">
           <img
             src={product.thumbnail}
@@ -264,7 +264,7 @@ export const ProductCard = ({ product }) => {
               </button>
             </div>
 
-            {/* ADD TO CART BUTTON */}
+            
             <Button 
               onClick={addToCart}
               className={`flex-1 h-8 rounded-none text-[10px] uppercase tracking-[0.12em] font-bold transition-colors ${
